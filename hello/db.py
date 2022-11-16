@@ -2,7 +2,7 @@ import pymssql
 
 class DBHelper:
     def __connect__(self):
-        self.con = pymssql.connect("server_name", "USER_NAME", "PASSWORD", "DATABASE")
+        self.con = pymssql.connect(host = r'213.140.22.237\SQLEXPRESS', user = r'elsherbini.mohamed',password= r'xxx123##', database= r'elsherbini.mohamed')
         self.cur = self.con.cursor()
 
     def __disconnect__(self):
