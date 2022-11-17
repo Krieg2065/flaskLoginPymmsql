@@ -65,16 +65,18 @@ def register():
         if form.validate_on_submit():
             username =form.username.data
             email=form.email.data
+            nome=form.nome.data
+            cognome=form.cognome.data
             hashedpassword=bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            stmt = "SELECT * FROM usersdata where useremail like %s"
+            stmt = "SELECT * FROM docente where useremail like %s"
             db=DBHelper()
             row=db.fetch(stmt,form.email.data,True )
             if row:
                 flash("email already registered")
                 return redirect(url_for('register'))
             else:
-                qedit="insert into usersdata(username,useremail,userpassword) values (%s, %s, %s)"
-                data=(username,email,hashedpassword)
+                qedit="insert into docente(userName,userEmail,userPass,nome,cognome) values (%s, %s, %s, %s, %s)"
+                data=(username,email,hashedpassword,nome,cognome)
                 db=DBHelper()
                 row=db.adddata(qedit,data )
                 flash("registeration succesful")

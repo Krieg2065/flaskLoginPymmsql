@@ -13,7 +13,7 @@
                         {{error}}
                     {% endfor %}
                 </div>
-            
+
             {% else %}
                 {{form.username}} 
             {% endif%}
@@ -31,6 +31,33 @@
             {% else %}
             {{form.email}} 
 
+            {% endif%}
+            
+            <div class="form-group">                
+                {{form.nome.label()}}
+                {% if form.nome.errors %}
+                    {{form.nome}} 
+                <div class="span-error">
+                    {% for error in form.nome.errors %}
+                        {{error}}
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                {{form.nome}} 
+            {% endif%}
+            <div class="form-group">                
+                {{form.cognome.label()}}
+                {% if form.cognome.errors %}
+                    {{form.cognome}} 
+                <div class="span-error">
+                    {% for error in form.cognome.errors %}
+                        {{error}}
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                {{form.cognome}} 
             {% endif%}
             <div class="form-group">
                 
