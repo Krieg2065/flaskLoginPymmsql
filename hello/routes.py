@@ -21,7 +21,7 @@ from .models import User
 def hello():
     if current_user.is_authenticated:
         db=DBHelper()
-        sql='SELECT TOP (100) CustomerID,CustomerName,Address1,City,Country,Phone,Email,CurrentBalance,OpeningBalance FROM Customer'
+        sql='SELECT * FROM scuola.verifica2'
         row=db.fetch(sql, data=None)
         return render_template('index.html',data=row,title='Home')
     else:
@@ -41,7 +41,7 @@ def login():
             # object of DBHelper class
             db=DBHelper()
             # statement for sql cmnd
-            sql="SELECT * FROM usersdata where useremail like %s"
+            sql="SELECT * FROM docente where useremail like %s"
             # fetch function is called which returns query data
             row=db.fetch(sql, form.email.data,1)
             # passed data to User model and created instance 
@@ -97,7 +97,7 @@ def page_not_found(e):
      
 @login_manager.user_loader
 def load_user(userid):
-    sql='SELECT * from usersdata where id = %d'
+    sql='SELECT * from docente where ID = %d'
     db=DBHelper()
     row=db.fetch(sql, userid,True)
     users=User(row[0], row[1], row[2], row[3]) 
