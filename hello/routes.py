@@ -6,13 +6,14 @@ from flask import render_template,redirect,url_for,request,flash,session
 # login manager package is used for loging functions
 from hello import app,bcrypt,login_manager
 # forms made by flask_forms in form.py module
-from .form import loginform,signupform
+from .form import loginform,signupform,AddVerificaform
 # db helper class deals with databse connections and queries
 from .db import DBHelper
 # 
 from flask_login import  login_required, login_user, logout_user ,current_user
 # User is basically model for logi funtions
 from .models import User
+import io
 
 
 # route for '/' page which requires log in
@@ -55,6 +56,29 @@ def login():
                 flash("invalid credentials")        
         return render_template('login.html',form=form,title='login')
 # route for register
+@login_required
+@app.route('/aggiungiVerifica',methods=['GET','POST'])
+def AggiungiVerifica():
+    if current_user.is_authenticated:
+        form=AddVerificaform()
+        if form.validate_on_submit():
+            testo =form.testo.data
+            griglia=form.griglia.data
+            argomento=form.argomento.data
+            materia=form.materia.data
+            print(form.testo_pdf.data)
+            testo_pdf= form.testo_pdf.read()
+            #testo_pdf= io.BytesIO(form.testo_pdf.data)
+            stmt = "SELECT * FROM docente where useremail like %s"
+            db=DBHelper()
+            qedit="insert into scuola.verifica2(testo,griglia,argomento,materia,testo_pdf) values (%s, %s, %s, %s, %s)"
+            data=(testo,griglia,argomento,materia,testo_pdf)
+            db=DBHelper()
+            row=db.adddata(qedit,data )
+            flash("Verifica aggiunta")
+            return redirect(url_for('hello'))
+        return render_template('aggiungiVerifica.html',form=form,title="aggiungiVerifica")
+
 @login_required
 @app.route('/register',methods=['GET','POST'])
 def register():

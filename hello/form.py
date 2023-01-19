@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField,PasswordField
+from wtforms import StringField,SubmitField,PasswordField,FileField
 from wtforms.validators import DataRequired,Email,EqualTo
 
 
@@ -17,4 +17,12 @@ class signupform(FlaskForm):
     confirm_password=PasswordField('Confirm Password',validators=[DataRequired(),EqualTo('password')])
     nome=StringField('nome',validators=[DataRequired()])
     cognome=StringField('cognome',validators=[DataRequired()])
+    submit=SubmitField('submit')
+
+class AddVerificaform(FlaskForm):
+    testo = StringField('testo')
+    griglia = StringField('griglia',validators=[DataRequired()])
+    argomento = StringField('argomento',validators=[DataRequired()])
+    materia = StringField('materia',validators=[DataRequired()])
+    testo_pdf = FileField('testo_pdf')
     submit=SubmitField('submit')
